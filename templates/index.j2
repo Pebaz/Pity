@@ -1,0 +1,14 @@
+<script>
+	fetch("/render" + , {
+		method: "GET",
+		mode: "cors",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		redirect: "follow"
+	}).then(response => {
+		response.text().then(function (text) {
+			document.write(text);
+		})
+	})
+</script>
