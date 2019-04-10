@@ -52,8 +52,10 @@ def compress_url():
 	if len(compressed) > 2000:
 		return f'Error - Compressed content too large: {len(compressed)}/2000. Limit to 2000 bytes.'
 	else:
-		return f'http://localhost:9001/#/{compressed}'
-
+		if sys.platform == 'win32':
+			return f'http://localhost:9001/#/{compressed}'
+		else:
+			return f'http://pbz-pity.heroku-app.com/#/{compressed}'
 
 @app.route('/render', methods=['POST'])
 def render():

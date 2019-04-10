@@ -5,11 +5,21 @@
 	<script src="/static/ace.js"></script>
 </head>
 <body>
-
-	<h1 class=title>Pity Editor</h1>
-	<button class=button onclick="genURL()">Generate URL</button>
-
-	<input class=input type=text id=url-box />
+	<div class=columns>
+		<div class="column is-6 is-offset-3">
+			<h1 class=title>Pity Editor</h1>
+			<div class=level>
+				<div class=level-item>
+					<input class=input type=text id=url-box />
+				</div>
+				<div class=level-right>
+					<div class=level-item>
+						<button class=button onclick="genURL()">Generate URL</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<div class=columns>
 		<div class="column is-6 is-offset-3">
