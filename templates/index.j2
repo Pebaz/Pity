@@ -1,11 +1,10 @@
 <script>
-	fetch("/render" + , {
-		method: "GET",
-		mode: "cors",
+	fetch("/render", {
+		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
 		},
-		redirect: "follow"
+		body: JSON.stringify({'value': window.location.hash})
 	}).then(response => {
 		response.text().then(function (text) {
 			document.write(text);

@@ -1,0 +1,89 @@
+<head>
+	<link rel=stylesheet href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css" />
+	<link rel=stylesheet href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" />
+	<link rel=stylesheet href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" crossorigin="anonymous">
+	<script src="/static/ace.js"></script>
+</head>
+<body>
+
+	<h1 class=title>Pity Editor</h1>
+	<button class=button onclick="genURL()">Generate URL</button>
+
+	<input class=input type=text id=url-box />
+
+	<div class=columns>
+		<div class="column is-6 is-offset-3">
+			<label class="label" id=char-count>0/2000 Bytes</label>
+			<pre id="editor"></pre>
+			<script>
+				function poll(fn, timeout, interval)
+				{
+					var endTime = Number(new Date()) + (timeout || 2000);
+					interval = interval || 100;
+
+					var checkCondition = function(resolve, reject)
+					{
+						// If the condition is met, we're done! 
+						var result = fn();
+						if(result) {
+							resolve(result);
+						}
+						else if (Number(new Date()) < endTime) {
+							setTimeout(checkCondition, interval, resolve, reject);
+						}
+						else {
+							reject(new Error('timed out for ' + fn + ': ' + arguments));
+						}
+					};
+					return new Promise(checkCondition);
+				}
+
+
+				var editor = ace.edit("editor");
+				//editor.setTheme("/static/monokai");
+				editor.session.setMode("/static/html");
+				editor.setOptions({
+					maxLines: Infinity
+				});
+
+				window.setInterval(() => {
+					fetch("/bit-length", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify({'value': editor.getValue()})
+					}).then(response => {
+						response.text().then(function (text) {
+							var count = document.getElementById('char-count');
+							count.innerText = `${text}/2000 Bytes`;
+							if (JSON.parse(text) > 2000)
+							{
+								count.classList.add('has-text-danger');
+							}
+							else
+							{
+								count.classList.remove('has-text-danger');
+							}
+						})
+					});
+				}, 2000);
+
+				function genURL()
+				{
+					fetch("/compress", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify({'value': editor.getValue()})
+					}).then(response => {
+						response.text().then(function (text) {
+							document.getElementById('url-box').value = text
+						})
+					})
+				}
+			</script>
+		</div>
+	</div>
+</body>

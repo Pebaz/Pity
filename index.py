@@ -16,49 +16,53 @@ import brotli
 ctm = lambda: int(round(time.time() * 1000))
 app = Flask(__name__)
 
-
-data = 'Hello World!'
-url = 'http://asdf.com/#/' + compress(data)
-print(url)
-
 def compress(data: str):
 	c = brotli.compress(bytes(data, encoding='utf-8'))
 	return base64.b64encode(c).decode('utf-8')
 
 def decompress(data: str):
 	d = base64.b64decode(bytes(data, encoding='utf-8'))
-	return 
+	return brotli.decompress(d).decode('utf-8')
+
+data = 'Hello World!'
+url = 'http://asdf.com/#/' + compress(data)
+print(url)
 
 
 @app.route('/')
 def index():
-	"""
-	Index page.
-	"""
 	return render_template('index.j2')
+
+@app.route('/edit')
+def edit():
+	return render_template('edit.j2')
+
+@app.route('/bit-length', methods=['POST'])
+def bit_length():
+	data = request.get_json()
+	if not data:
+		return '0'
+	return f'{len(compress(data["value"]))}'
+
+@app.route('/compress', methods=['POST'])
+def compress_url():
+	# Trim hash from URL
+	data = request.get_json()['value']
+	compressed = compress(data)
+	if len(compressed) > 2000:
+		return f'Error - Compressed content too large: {len(compressed)}/2000. Limit to 2000 bytes.'
+	else:
+		return f'http://localhost:9001/#/{compressed}'
 
 
 @app.route('/render', methods=['POST'])
-def get_url(data):
-	"""
-	GET a previously-shortened URL by ID.
-
-	POST a new URL to shorten.
-	"""
-	print(data)
-	return "bah!"
-
-	# try:
-	# 	start = ctm()
-
-	# 	print(f'Delay: {ctm() - start} ms')
-
-	# 	print(f'REDIRECTING TO: {url}')
-	# 	return redirect(url, code=302)
-	# except Exception as e:
-	# 	print(e)
-	# 	abort(404)
-		
+def render():
+	# Trim hash from URL
+	data = request.get_json()['value'].replace('#/', '').replace('#', '')
+	if data:
+		return decompress(data)
+	else:
+		return ''
 
 
 if __name__ == '__main__':
