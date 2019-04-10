@@ -55,7 +55,7 @@ def compress_url():
 		if sys.platform == 'win32':
 			return f'http://localhost:9001/#/{compressed}'
 		else:
-			return f'http://pbz-pity.heroku-app.com/#/{compressed}'
+			return f'http://pbz-pity.herokuapp.com/#/{compressed}'
 
 @app.route('/render', methods=['POST'])
 def render():
