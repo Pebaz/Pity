@@ -1,7 +1,28 @@
 <script>
-	if (['', '#', '#/'].includes(window.location.hash))
+	// If the anchor is '', go to edit
+	// If the anchor is not '', render the page
+	// If the anchor is not '', but the url is not '/', render the page
+
+	// URL contains data as path
+	if (window.location.pathname.length > 1)
 	{
-		window.location = '/edit';
+		console.log(1)
+		var data = window.location.pathname.slice(1);
+	}
+
+	// Someone is using the anchor or wants to go to the editor
+	else
+	{
+		if (window.location.hash.length > 0)
+		{
+			console.log(2)
+			var data = window.location.hash;
+		}
+		else
+		{
+			console.log(3)
+			window.location = '/edit';
+		}
 	}
 
 	fetch("/render", {
@@ -9,7 +30,7 @@
 		headers: {
 			"Content-Type": "application/json"
 		},
-		body: JSON.stringify({'value': window.location.hash})
+		body: JSON.stringify({'value': data})
 	}).then(response => {
 		response.text().then(function (text) {
 			document.write(text);

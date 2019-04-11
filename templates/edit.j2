@@ -10,7 +10,7 @@
 			<h1 class=title>Pity Editor</h1>
 			<div class=level>
 				<div class=level-item>
-					<input class=input type=text id=url-box />
+					<input class=input type=text id=url-box onpaste="decodeURL()" />
 				</div>
 				<div class=level-right>
 					<div class=level-item>
@@ -80,6 +80,21 @@
 				}, 2000);
 
 				function genURL()
+				{
+					fetch("/compress", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify({'value': editor.getValue()})
+					}).then(response => {
+						response.text().then(function (text) {
+							document.getElementById('url-box').value = text
+						})
+					})
+				}
+
+				function decodeURL()
 				{
 					fetch("/compress", {
 						method: "POST",

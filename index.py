@@ -8,12 +8,11 @@
 [✔] Allow redirecting using IDs
 """
 
-import sys, os, time, base64
+import sys, os, time, base64, traceback
 import requests
-from flask import Flask, redirect, render_template, request, abort
 import brotli
+from flask import Flask, redirect, render_template, request, abort
 
-ctm = lambda: int(round(time.time() * 1000))
 app = Flask(__name__)
 
 def compress(data: str):
@@ -24,13 +23,10 @@ def decompress(data: str):
 	d = base64.b64decode(bytes(data, encoding='utf-8'))
 	return brotli.decompress(d).decode('utf-8')
 
-data = 'Hello World!'
-url = 'http://asdf.com/#/' + compress(data)
-print(url)
-
 
 @app.route('/')
-def index():
+@app.route('/<path:data>')
+def index(data=None):
 	return render_template('index.j2')
 
 @app.route('/edit')
@@ -61,10 +57,15 @@ def compress_url():
 def render():
 	# Trim hash from URL
 	data = request.get_json()['value'].replace('#/', '').replace('#', '')
-	if data:
-		return decompress(data)
-	else:
-		return ''
+
+	try:
+		if data:
+			return decompress(data)
+		else:
+			return ''
+	except Exception as e:
+		traceback.print_exc()
+		return render_template('error.j2', error=e.__class__.__name__)
 
 
 if __name__ == '__main__':
