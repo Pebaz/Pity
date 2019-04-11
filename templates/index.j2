@@ -1,4 +1,9 @@
 <script>
+	if (['', '#', '#/'].includes(window.location.hash))
+	{
+		window.location = '/edit';
+	}
+
 	fetch("/render", {
 		method: "POST",
 		headers: {
