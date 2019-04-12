@@ -14,6 +14,7 @@ import brotli
 from flask import Flask, redirect, render_template, request, abort
 
 app = Flask(__name__)
+IS_PRODUCTION = sys.platform == 'win32'
 
 def compress(data: str):
 	c = brotli.compress(bytes(data, encoding='utf-8'))
@@ -47,15 +48,21 @@ def bit_length():
 @app.route('/compress', methods=['POST'])
 def compress_url():
 	# Trim hash from URL
-	data = request.get_json()['value']
+	params = request.get_json()
+	data = params['value']
 	compressed = compress(data)
-	if len(compressed) > 2000:
-		return f'Error - Compressed content too large: {len(compressed)}/2000. Limit to 2000 bytes.'
-	else:
-		if sys.platform == 'win32':
-			return f'http://localhost:9001/#/{compressed}'
-		else:
-			return f'http://pbz-pity.herokuapp.com/#/{compressed}'
+
+	if params['GENERATE_FRAGMENT_URL'] and len(compressed) > 2000:
+		return (f'Error - Compressed content too large: '
+				f'{len(compressed)}/2000. Limit to 2000 bytes.')
+	
+	print(params['GENERATE_FRAGMENT_URL'])
+	host = 'pbz-pity.herokuapp.com' if IS_PRODUCTION else 'localhost:9001'
+	stub = '#/' if params['GENERATE_FRAGMENT_URL'] else ''
+	url = f'http://{host}/{stub}{compressed}'
+	print(url)
+	return url
+
 
 
 @app.route('/render', methods=['POST'])

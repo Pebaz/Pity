@@ -41,6 +41,10 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-twilight.js" async></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-vibrant_ink.js" async></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-xcode.js" async></script>
+
+	<script>
+		var GENERATE_FRAGMENT_URL = true;
+	</script>
 </head>
 <body>
 	<div class=columns>
@@ -59,12 +63,12 @@
 							<input class=input type=text id=url-box onpaste="decodeURL()" />
 						</div>
 						<div class=control>
-							<span class=select>
-								<select>
-									<option>Fragment</option>
-									<option>URL</option>
+							<div class=select>
+								<select onchange="GENERATE_FRAGMENT_URL = (this.options[this.selectedIndex].value) == 'true'">
+									<option value=true>Fragment</option>
+									<option value=false>URL</option>
 								</select>
-							</span>
+							</div>
 						</div>
 					</div>
 					<div class="field is-grouped">
@@ -75,50 +79,50 @@
 							<button class="button" onclick="copy()">Copy</button>
 						</div>
 						<div class="control has-icons-left">
-								<div class="select is-info">
-									<select name=lines onchange="editor.setTheme(this.options[this.selectedIndex].value); editor.find('^^^')">
-										<option value="ace/theme/ambiance">Ambiance</option>
-										<option value="ace/theme/chaos">Chaos</option>
-										<option value="ace/theme/chrome">Chrome</option>
-										<option value="ace/theme/clouds_midnight">Clouds Midnight</option>
-										<option value="ace/theme/clouds">Clouds</option>
-										<option value="ace/theme/cobalt">Cobalt</option>
-										<option value="ace/theme/crimson_editor">Crimson Editor</option>
-										<option value="ace/theme/dawn">Dawn</option>
-										<option value="ace/theme/dracula">Dracula</option>
-										<option value="ace/theme/dreamweaver">Dreamweaver</option>
-										<option value="ace/theme/eclipse">Eclipse</option>
-										<option value="ace/theme/github">Github</option>
-										<option value="ace/theme/gob">Gob</option>
-										<option value="ace/theme/gruvbox">Gruvbox</option>
-										<option value="ace/theme/idle_fingers">Idle Fingers</option>
-										<option value="ace/theme/iplastic">Iplastic</option>
-										<option value="ace/theme/katzenmilch">Katzenmilch</option>
-										<option value="ace/theme/kr_theme">Kr Theme</option>
-										<option value="ace/theme/kuroir">Kuroir</option>
-										<option value="ace/theme/merbivore_soft">Merbivore Soft</option>
-										<option value="ace/theme/merbivore">Merbivore</option>
-										<option value="ace/theme/mono_industrial">Mono Industrial</option>
-										<option value="ace/theme/monokai">Monokai</option>
-										<option value="ace/theme/pastel_on_dark">Pastel On Dark</option>
-										<option value="ace/theme/solarized_light">Solarized Light</option>
-										<option value="ace/theme/solarized_dark">Solarized Dark</option>
-										<option value="ace/theme/sqlserver">Sqlserver</option>
-										<option value="ace/theme/terminal">Terminal</option>
-										<option value="ace/theme/textmate">Textmate</option>
-										<option value="ace/theme/tomorrow_night_blue">Tomorrow Night Blue</option>
-										<option value="ace/theme/tomorrow_night_bright">Tomorrow Night Bright</option>
-										<option value="ace/theme/tomorrow_night_eighties">Tomorrow Night Eighties</option>
-										<option value="ace/theme/tomorrow_night">Tomorrow Night</option>
-										<option value="ace/theme/tomorrow" selected>Tomorrow</option>
-										<option value="ace/theme/twilight">Twilight</option>
-										<option value="ace/theme/vibrant_ink">Vibrant Ink</option>
-										<option value="ace/theme/xcode">Xcode</option>
-									</select>
-								</div>
-								<span class="icon is-left">
-									<i class="fas fa-code"></i>
-								</span>
+							<div class="select is-info">
+								<select name=lines onchange="editor.setTheme(this.options[this.selectedIndex].value); editor.find('^^^')">
+									<option value="ace/theme/ambiance">Ambiance</option>
+									<option value="ace/theme/chaos">Chaos</option>
+									<option value="ace/theme/chrome">Chrome</option>
+									<option value="ace/theme/clouds_midnight">Clouds Midnight</option>
+									<option value="ace/theme/clouds">Clouds</option>
+									<option value="ace/theme/cobalt">Cobalt</option>
+									<option value="ace/theme/crimson_editor">Crimson Editor</option>
+									<option value="ace/theme/dawn">Dawn</option>
+									<option value="ace/theme/dracula">Dracula</option>
+									<option value="ace/theme/dreamweaver">Dreamweaver</option>
+									<option value="ace/theme/eclipse">Eclipse</option>
+									<option value="ace/theme/github">Github</option>
+									<option value="ace/theme/gob">Gob</option>
+									<option value="ace/theme/gruvbox">Gruvbox</option>
+									<option value="ace/theme/idle_fingers">Idle Fingers</option>
+									<option value="ace/theme/iplastic">Iplastic</option>
+									<option value="ace/theme/katzenmilch">Katzenmilch</option>
+									<option value="ace/theme/kr_theme">Kr Theme</option>
+									<option value="ace/theme/kuroir">Kuroir</option>
+									<option value="ace/theme/merbivore_soft">Merbivore Soft</option>
+									<option value="ace/theme/merbivore">Merbivore</option>
+									<option value="ace/theme/mono_industrial">Mono Industrial</option>
+									<option value="ace/theme/monokai">Monokai</option>
+									<option value="ace/theme/pastel_on_dark">Pastel On Dark</option>
+									<option value="ace/theme/solarized_light">Solarized Light</option>
+									<option value="ace/theme/solarized_dark">Solarized Dark</option>
+									<option value="ace/theme/sqlserver">Sqlserver</option>
+									<option value="ace/theme/terminal">Terminal</option>
+									<option value="ace/theme/textmate">Textmate</option>
+									<option value="ace/theme/tomorrow_night_blue">Tomorrow Night Blue</option>
+									<option value="ace/theme/tomorrow_night_bright">Tomorrow Night Bright</option>
+									<option value="ace/theme/tomorrow_night_eighties">Tomorrow Night Eighties</option>
+									<option value="ace/theme/tomorrow_night">Tomorrow Night</option>
+									<option value="ace/theme/tomorrow" selected>Tomorrow</option>
+									<option value="ace/theme/twilight">Twilight</option>
+									<option value="ace/theme/vibrant_ink">Vibrant Ink</option>
+									<option value="ace/theme/xcode">Xcode</option>
+								</select>
+							</div>
+							<span class="icon is-left">
+								<i class="fas fa-code"></i>
+							</span>
 						</div>
 					</div>
 				</div>
@@ -128,7 +132,7 @@
 
 	<div class=columns>
 		<div class="column is-6 is-offset-3">
-			
+
 			<!-- Code Editor -->
 			<pre id="editor"></pre>
 			<script>
@@ -161,8 +165,6 @@
 					return new Promise(checkCondition);
 				}
 
-				var GENERATE_FRAGMENT_URL = true;
-
 				var editor = ace.edit("editor");
 				var html = `{{ html }}`;
 				editor.setValue(html);
@@ -185,11 +187,11 @@
 
 							if (GENERATE_FRAGMENT_URL)
 							{
-								count.innerText = `${text}/2000 Bytes`;
+								count.innerHTML = `${text}/2000 Bytes`;
 							}
 							else
 							{
-								count.innerText = `<strike>${text}/2000 Bytes</strike>`;
+								count.innerHTML = `<strike>${text}/2000 Bytes</strike>`;
 							}
 
 							if (JSON.parse(text) > 2000)
@@ -211,7 +213,10 @@
 						headers: {
 							"Content-Type": "application/json"
 						},
-						body: JSON.stringify({'value': editor.getValue()})
+						body: JSON.stringify({
+							'value': editor.getValue(),
+							'GENERATE_FRAGMENT_URL' : GENERATE_FRAGMENT_URL
+						})
 					}).then(response => {
 						response.text().then(function (text) {
 							document.getElementById('url-box').value = text
