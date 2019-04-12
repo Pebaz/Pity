@@ -29,9 +29,12 @@ def decompress(data: str):
 def index(data=None):
 	return render_template('index.j2')
 
+
 @app.route('/edit')
 def edit():
-	return render_template('edit.j2')
+	with open('default_html.html') as file:
+		return render_template('edit.j2', html=file.read())
+
 
 @app.route('/bit-length', methods=['POST'])
 def bit_length():
@@ -39,6 +42,7 @@ def bit_length():
 	if not data:
 		return '0'
 	return f'{len(compress(data["value"]))}'
+
 
 @app.route('/compress', methods=['POST'])
 def compress_url():
@@ -52,6 +56,7 @@ def compress_url():
 			return f'http://localhost:9001/#/{compressed}'
 		else:
 			return f'http://pbz-pity.herokuapp.com/#/{compressed}'
+
 
 @app.route('/render', methods=['POST'])
 def render():

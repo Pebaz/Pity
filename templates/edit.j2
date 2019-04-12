@@ -2,19 +2,124 @@
 	<link rel=stylesheet href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css" />
 	<link rel=stylesheet href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" />
 	<link rel=stylesheet href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" crossorigin="anonymous">
-	<script src="/static/ace.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/ace.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-solarized_light.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/mode-html.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-ambiance.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-chaos.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-chrome.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-clouds_midnight.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-clouds.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-cobalt.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-crimson_editor.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-dawn.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-dracula.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-dreamweaver.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-eclipse.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-github.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-gob.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-gruvbox.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-idle_fingers.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-iplastic.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-katzenmilch.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-kr_theme.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-kuroir.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-merbivore_soft.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-merbivore.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-mono_industrial.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-monokai.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-pastel_on_dark.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-solarized_dark.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-sqlserver.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-terminal.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-textmate.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-tomorrow_night_blue.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-tomorrow_night_bright.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-tomorrow_night_eighties.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-tomorrow_night.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-tomorrow.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-twilight.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-vibrant_ink.js" async></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-xcode.js" async></script>
 </head>
 <body>
 	<div class=columns>
 		<div class="column is-6 is-offset-3">
+			
 			<h1 class=title>Pity Editor</h1>
-			<div class=level>
-				<div class=level-item>
-					<input class=input type=text id=url-box onpaste="decodeURL()" />
-				</div>
-				<div class=level-right>
-					<div class=level-item>
-						<button class=button onclick="genURL()">Generate URL</button>
+			
+			<!-- Byte Count Field and Theme Drop-Down -->
+			<div class="field is-horizontal">
+				<div class=field-body>
+					<div class="field has-addons has-addons-right">
+						<div class=control>
+							<button id=char-count class="button is-static">0/2000 Bytes</button>
+						</div>
+						<div class="control is-expanded">
+							<input class=input type=text id=url-box onpaste="decodeURL()" />
+						</div>
+						<div class=control>
+							<span class=select>
+								<select>
+									<option>Fragment</option>
+									<option>URL</option>
+								</select>
+							</span>
+						</div>
+					</div>
+					<div class="field is-grouped">
+						<div class=control>
+							<button class="button is-primary" onclick="genURL()">Generate URL</button>
+						</div>					
+						<div class=control>
+							<button class="button" onclick="copy()">Copy</button>
+						</div>
+						<div class="control has-icons-left">
+								<div class="select is-info">
+									<select name=lines onchange="editor.setTheme(this.options[this.selectedIndex].value); editor.find('^^^')">
+										<option value="ace/theme/ambiance">Ambiance</option>
+										<option value="ace/theme/chaos">Chaos</option>
+										<option value="ace/theme/chrome">Chrome</option>
+										<option value="ace/theme/clouds_midnight">Clouds Midnight</option>
+										<option value="ace/theme/clouds">Clouds</option>
+										<option value="ace/theme/cobalt">Cobalt</option>
+										<option value="ace/theme/crimson_editor">Crimson Editor</option>
+										<option value="ace/theme/dawn">Dawn</option>
+										<option value="ace/theme/dracula">Dracula</option>
+										<option value="ace/theme/dreamweaver">Dreamweaver</option>
+										<option value="ace/theme/eclipse">Eclipse</option>
+										<option value="ace/theme/github">Github</option>
+										<option value="ace/theme/gob">Gob</option>
+										<option value="ace/theme/gruvbox">Gruvbox</option>
+										<option value="ace/theme/idle_fingers">Idle Fingers</option>
+										<option value="ace/theme/iplastic">Iplastic</option>
+										<option value="ace/theme/katzenmilch">Katzenmilch</option>
+										<option value="ace/theme/kr_theme">Kr Theme</option>
+										<option value="ace/theme/kuroir">Kuroir</option>
+										<option value="ace/theme/merbivore_soft">Merbivore Soft</option>
+										<option value="ace/theme/merbivore">Merbivore</option>
+										<option value="ace/theme/mono_industrial">Mono Industrial</option>
+										<option value="ace/theme/monokai">Monokai</option>
+										<option value="ace/theme/pastel_on_dark">Pastel On Dark</option>
+										<option value="ace/theme/solarized_light">Solarized Light</option>
+										<option value="ace/theme/solarized_dark">Solarized Dark</option>
+										<option value="ace/theme/sqlserver">Sqlserver</option>
+										<option value="ace/theme/terminal">Terminal</option>
+										<option value="ace/theme/textmate">Textmate</option>
+										<option value="ace/theme/tomorrow_night_blue">Tomorrow Night Blue</option>
+										<option value="ace/theme/tomorrow_night_bright">Tomorrow Night Bright</option>
+										<option value="ace/theme/tomorrow_night_eighties">Tomorrow Night Eighties</option>
+										<option value="ace/theme/tomorrow_night">Tomorrow Night</option>
+										<option value="ace/theme/tomorrow" selected>Tomorrow</option>
+										<option value="ace/theme/twilight">Twilight</option>
+										<option value="ace/theme/vibrant_ink">Vibrant Ink</option>
+										<option value="ace/theme/xcode">Xcode</option>
+									</select>
+								</div>
+								<span class="icon is-left">
+									<i class="fas fa-code"></i>
+								</span>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -23,9 +128,17 @@
 
 	<div class=columns>
 		<div class="column is-6 is-offset-3">
-			<label class="label" id=char-count>0/2000 Bytes</label>
+			
+			<!-- Code Editor -->
 			<pre id="editor"></pre>
 			<script>
+				function copy()
+				{
+					var url_box = document.getElementById('url-box');
+					url_box.select();
+					document.execCommand("copy");
+				}
+
 				function poll(fn, timeout, interval)
 				{
 					var endTime = Number(new Date()) + (timeout || 2000);
@@ -48,10 +161,13 @@
 					return new Promise(checkCondition);
 				}
 
+				var GENERATE_FRAGMENT_URL = true;
 
 				var editor = ace.edit("editor");
-				//editor.setTheme("/static/monokai");
-				editor.session.setMode("/static/html");
+				var html = `{{ html }}`;
+				editor.setValue(html);
+				editor.find('^^^');
+				editor.session.setMode("ace/mode/html");
 				editor.setOptions({
 					maxLines: Infinity
 				});
@@ -66,7 +182,16 @@
 					}).then(response => {
 						response.text().then(function (text) {
 							var count = document.getElementById('char-count');
-							count.innerText = `${text}/2000 Bytes`;
+
+							if (GENERATE_FRAGMENT_URL)
+							{
+								count.innerText = `${text}/2000 Bytes`;
+							}
+							else
+							{
+								count.innerText = `<strike>${text}/2000 Bytes</strike>`;
+							}
+
 							if (JSON.parse(text) > 2000)
 							{
 								count.classList.add('has-text-danger');
