@@ -1,36 +1,39 @@
 <script>
-	// If the anchor is '', go to edit
-	// If the anchor is not '', render the page
-	// If the anchor is not '', but the url is not '/', render the page
+	function main() {
 
-	// URL contains data as path
-	if (window.location.pathname.length > 1)
-	{
-		var data = window.location.pathname.slice(1);
-	}
-
-	// Someone is using the anchor or wants to go to the editor
-	else
-	{
-		if (window.location.hash.length > 0)
+		// URL contains data as path
+		if (window.location.pathname.length > 1)
 		{
-			var data = window.location.hash;
+			var data = window.location.pathname.slice(1);
 		}
+
+		// Someone is using the anchor or wants to go to the editor
 		else
 		{
-			window.location = '/edit';
+			if (window.location.hash.length > 0)
+			{
+				var data = window.location.hash;
+			}
+			else
+			{
+				window.location = '/edit';
+				return;
+			}
 		}
-	}
 
-	fetch("/render", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify({'value': data})
-	}).then(response => {
-		response.text().then(function (text) {
-			document.write(text);
+		console.log(1, data);
+
+		fetch("/render", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({'value': data})
+		}).then(response => {
+			response.text().then(function (text) {
+				document.write(text);
+			})
 		})
-	})
+	}
+	main();
 </script>
