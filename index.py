@@ -14,7 +14,7 @@ import brotli
 from flask import Flask, redirect, render_template, request, abort
 
 app = Flask(__name__)
-IS_PRODUCTION = sys.platform == 'win32'
+IS_DEVELOP = sys.platform == 'win32'
 
 def compress(data: str):
 	c = brotli.compress(bytes(data, encoding='utf-8'))
@@ -57,7 +57,7 @@ def compress_url():
 				f'{len(compressed)}/2000. Limit to 2000 bytes.')
 	
 	print(params['GENERATE_FRAGMENT_URL'])
-	host = 'pbz-pity.herokuapp.com' if IS_PRODUCTION else 'localhost:9001'
+	host = 'localhost:9001' if IS_DEVELOP else 'pbz-pity.herokuapp.com'
 	stub = '#/' if params['GENERATE_FRAGMENT_URL'] else ''
 	url = f'http://{host}/{stub}{compressed}'
 	print(url)
