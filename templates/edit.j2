@@ -2,6 +2,7 @@
 	<link rel=stylesheet href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css" />
 	<link rel=stylesheet href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" />
 	<link rel=stylesheet href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" crossorigin="anonymous">
+	<script src="/static/js/modal.js" async></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/ace.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-solarized_light.js" async></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/mode-html.js" async></script>
@@ -41,9 +42,28 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-twilight.js" async></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-vibrant_ink.js" async></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-xcode.js" async></script>
-
 	<script>
 		var GENERATE_FRAGMENT_URL = true;
+
+		function showPreview() {
+			showItem('preview');
+			var page = document.getElementById('preview-pane');
+			page.srcdoc = editor.getValue();
+			page.onload = () => {
+				document.getElementById('preview-title').innerHTML = page.contentDocument.title;
+			}
+		}
+
+		function loadFile(filePath) {
+			var result = null;
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.open('GET', filePath, false);
+			xmlhttp.send();
+			if (xmlhttp.status == 200) {
+				result = xmlhttp.responseText;
+			}
+			return result;
+		}
 	</script>
 </head>
 <body>
@@ -78,6 +98,24 @@
 						<div class=control>
 							<button class="button" onclick="copy()">Copy</button>
 						</div>
+						<div class=control>
+							<button class="button" onclick="document.getElementById('url-box').value = ''">Clear</button>
+						</div>
+						<div class=control>
+							<button class="button" onclick="showPreview()">Preview</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+
+			<div class="field is-horizontal">
+				<div class=field-body>
+					<div class="field is-grouped">
+
+						<!-- Code Theme -->
 						<div class="control has-icons-left">
 							<div class="select is-info">
 								<select name=lines onchange="editor.setTheme(this.options[this.selectedIndex].value); editor.find('^^^')">
@@ -124,9 +162,30 @@
 								<i class="fas fa-code"></i>
 							</span>
 						</div>
+
+						<!-- Code Template -->
+						<div class="control has-icons-left">
+							<div class="select is-info">
+								<select name=lines onchange="editor.setValue(loadFile(this.options[this.selectedIndex].value)); editor.find('^^^')">
+									{% for default_file, default_title in defaults %}
+										<option value="{{ default_file }}">{{ default_title }}</option>
+									{% endfor %}
+								</select>
+							</div>
+							<span class="icon is-left">
+								<i class="fas fa-align-justify"></i>
+							</span>
+						</div>
+
+
+
 					</div>
 				</div>
 			</div>
+
+
+
+
 		</div>
 	</div>
 
@@ -255,4 +314,29 @@
 			</script>
 		</div>
 	</div>
+
+
+	<!-- Modal containing preview -->
+	<div id=preview class="animated fadeIn modal">
+		<div class=modal-background></div>
+		<div id=preview-card class="animated zoomIn faster modal-card">
+			<header class=modal-card-head>
+				<p id=preview-title class="modal-card-title">Preview</p>
+				<button class=delete aria-label=close onclick="closeModal('preview')"></button>
+			</header>
+			<section class=modal-card-body>
+				
+				<!-- Content -->
+
+				<iframe id=preview-pane style="display: inline-flex; width: 100%; height: 100%; margin: 0"></iframe>
+
+				<!-- /Content -->
+
+			</section>
+			<footer class=modal-card-foot>
+				{# <button class="button" onclick="closeModal('preview')">Close</button> #}
+			</footer>
+		</div>
+	</div>
+
 </body>

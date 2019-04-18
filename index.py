@@ -9,6 +9,7 @@
 """
 
 import sys, os, time, base64, traceback
+from pathlib import Path
 import requests
 import brotli
 from flask import Flask, redirect, render_template, request, abort
@@ -33,8 +34,10 @@ def index(data=None):
 
 @app.route('/edit')
 def edit():
-	with open('default_html.html') as file:
-		return render_template('edit.j2', html=file.read())
+	defaults = [[f'/{i}', i.stem[8:]] for i in Path('./static/defaults').iterdir()]
+
+	with open('static/defaults/default_bulma.html') as file:
+		return render_template('edit.j2', html=file.read(), defaults=defaults)
 
 
 @app.route('/bit-length', methods=['POST'])
@@ -60,7 +63,6 @@ def compress_url():
 	host = 'localhost:9001' if IS_DEVELOP else 'pbz-pity.herokuapp.com'
 	stub = '#/' if params['GENERATE_FRAGMENT_URL'] else ''
 	url = f'http://{host}/{stub}{compressed}'
-	print(url)
 	return url
 
 
