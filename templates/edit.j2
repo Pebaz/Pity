@@ -64,6 +64,25 @@
 			}
 			return result;
 		}
+
+		function animateCSS(elementID, animationName, callback) {
+			const node = document.getElementById(elementID)
+			node.classList.add('animated', animationName)
+
+			function handleAnimationEnd() {
+				node.classList.remove('animated', animationName)
+				node.removeEventListener('animationend', handleAnimationEnd)
+
+				if (typeof callback === 'function') callback()
+			}
+
+			node.addEventListener('animationend', handleAnimationEnd)
+		}
+
+		function clearURLBOX() {
+			document.getElementById('url-box').value = '';
+			document.getElementById('url-success').style.display = "none";
+		}
 	</script>
 </head>
 <body>
@@ -79,8 +98,11 @@
 						<div class=control>
 							<button id=char-count class="button is-static">0/2000 Bytes</button>
 						</div>
-						<div class="control is-expanded">
+						<div class="control has-icons-right is-expanded">
 							<input class=input type=text id=url-box onpaste="decodeURL()" />
+							<span class="icon is-small is-right has-text-success">
+								<i id=url-success class="fas fa-check" style="display: none"></i>
+							</span>
 						</div>
 						<div class=control>
 							<div class=select>
@@ -99,7 +121,7 @@
 							<button class="button" onclick="copy()">Copy</button>
 						</div>
 						<div class=control>
-							<button class="button" onclick="document.getElementById('url-box').value = ''">Clear</button>
+							<button class="button" onclick="clearURLBOX()">Clear</button>
 						</div>
 						<div class=control>
 							<button class="button" onclick="showPreview()">Preview</button>
@@ -279,6 +301,15 @@
 					}).then(response => {
 						response.text().then(function (text) {
 							document.getElementById('url-box').value = text
+
+							// Show the success checkmark
+							var success = document.getElementById('url-success');
+							success.style.display = "inline-flex";
+							animateCSS('url-success', 'bounceIn', () => {
+								animateCSS('url-success', 'fadeOut', () => {
+									success.style.display = "none";
+								});
+							});
 						})
 					})
 				}

@@ -59,7 +59,6 @@ def compress_url():
 		return (f'Error - Compressed content too large: '
 				f'{len(compressed)}/2000. Limit to 2000 bytes.')
 	
-	print(params['GENERATE_FRAGMENT_URL'])
 	host = 'localhost:9001' if IS_DEVELOP else 'pbz-pity.herokuapp.com'
 	stub = '#/' if params['GENERATE_FRAGMENT_URL'] else ''
 	url = f'http://{host}/{stub}{compressed}'
