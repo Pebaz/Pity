@@ -20,6 +20,10 @@ python index.py
 To host on Heroku (free tier):
 
 ```bash
+# First go to https://dashboard.heroku.com/apps/<your app>/settings
+# and add the "Config Var":
+# KEY  VALUE
+# host <your app>.herokuapp.com
 git clone 
 heroku git:remote -a <the app name that you went and created on Heroku>
 git push heroku master
