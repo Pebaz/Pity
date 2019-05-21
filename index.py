@@ -1,13 +1,3 @@
-"""
-[✔] Rename project
-[ ] Deploy on Zeit
-[ ] Map url.pebaz.com wildcard domain to Zeit
-[✔] Generate new ID for URL
-[✔] Save URL to database
-[✔] Return ID/URL to user
-[✔] Allow redirecting using IDs
-"""
-
 import sys, os, time, base64, traceback
 from pathlib import Path
 import requests
@@ -15,7 +5,11 @@ import brotli
 from flask import Flask, redirect, render_template, request, abort
 
 app = Flask(__name__)
-IS_DEVELOP = sys.platform == 'win32'
+
+# You need to set your app's name in Heroku's environment variables as:
+# host="your-app.herokuapp.com"
+HOST = f'{os.environ.get("host", "localhost")}:{os.environ.get("PORT", 9001)}'
+
 
 def compress(data: str):
 	c = brotli.compress(bytes(data, encoding='utf-8'))
@@ -59,9 +53,8 @@ def compress_url():
 		return (f'Error - Compressed content too large: '
 				f'{len(compressed)}/2000. Limit to 2000 bytes.')
 	
-	host = 'localhost:9001' if IS_DEVELOP else 'pbz-pity.herokuapp.com'
 	stub = '#/' if params['GENERATE_FRAGMENT_URL'] else ''
-	url = f'http://{host}/{stub}{compressed}'
+	url = f'http://{HOST}/{stub}{compressed}'
 	return url
 
 
