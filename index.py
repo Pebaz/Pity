@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 # You need to set your app's name in Heroku's environment variables as:
 # host="your-app.herokuapp.com"
-HOST = f'{os.environ.get("host", "localhost")}:{os.environ.get("PORT", 9001)}'
+HOST = f'{os.environ.get("host", "localhost")}}'
 
 
 def compress(data: str):
