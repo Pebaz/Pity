@@ -1,5 +1,17 @@
-# Pity
-Part of [Fragment Theory]().  Create pages contained entirely within a URL.
+<h1 align="center">Pity</h1>
+
+<div align="center">
+	<img src=misc/Logo.png width=192 />
+</div>
+
+<div align="center">
+	<strong>Web apps without hosting</strong>
+</div>
+
+<div align="center">
+	Part of <a href=https://github.com/Pebaz/FragmentTheory>Fragment Theory</a>.  Create pages contained entirely within a URL.
+</div>
+
 
 <img src=misc/EditorScreenshot.png />
 
