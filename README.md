@@ -26,6 +26,7 @@ To host locally:
 ```bash
 git clone https://github.com/Pebaz/Pity
 cd Pity
+pip install -r requirements.txt
 python index.py
 ```
 
